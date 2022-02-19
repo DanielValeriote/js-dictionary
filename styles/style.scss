@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-blue : rgb(83, 143, 233);
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #efefef;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+.input-container {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+
+  & label {
+    font-weight: bold;
+    font-size: 1.4rem;
+  }
+}
+
+#wordInput {
+  font-size: 1.1rem;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  &:focus {
+    outline: var(--main-blue) 1px solid;
+    border: 1px solid black;
+  }
+}
+
+#wordSubmitBtn {
+  padding: 8px;
+  background-color: var(--main-blue);
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  cursor: pointer;
+}
