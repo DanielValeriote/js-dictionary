@@ -9,10 +9,17 @@ const handleClick = () => {
   const word = input.value.trim();
   word &&
     getDefinition(word)
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if(resp.status >= 400) {
+          renderErrorScreen(resp.json());
+          return "ERROR";
+        } 
+        return resp.json();
+      })
       .then((res) => {
-        console.log(res[0])
-        renderDefinition(res[0]);
+          if(res !== "ERROR") {
+            renderDefinition(res[0]);
+          }
       })
       .catch((err) => {
         console.log(err)
@@ -30,7 +37,6 @@ function renderDefinition(df){
 
   let phoneticText;
   df.phonetics.every((phonetic) => {
-    console.log("looped");
     if (phonetic.text.length > 0) {
       phoneticText = phonetic.text;
       return false;
@@ -42,14 +48,12 @@ function renderDefinition(df){
   dfbody.innerHTML = "";
 
   dfheader.innerHTML = `<h2 class="wordShowcase">${df.word} ${
-    // df.phonetics[1] && `<span class="phoneticShowcase">${df.phonetics[1].text}</span>`
     phoneticText ?
     `<span class="phoneticShowcase">${phoneticText}</span>` : ""
   } </h2>`;
   let audioSrc;
   
   df.phonetics.every(phonetic => {
-    console.log("looped")
     if (phonetic.audio.length > 0) {
       audioSrc = phonetic.audio;
       createAudioBtn(audioSrc);
@@ -120,4 +124,15 @@ function renderDefinition(df){
 
 function clearInput () {
   document.getElementById("wordInput").value = "";
+}
+
+function renderErrorScreen (resp) {
+  resp.then(res => {
+    document.querySelector(".df-body").innerHTML = `
+    <div class="error-container">
+      <h2>${res.title}</h2>
+      <p>${res.message}</p>
+    </div>
+    `
+  })
 }
