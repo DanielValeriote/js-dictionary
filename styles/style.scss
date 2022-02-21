@@ -15,8 +15,22 @@ body {
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+header {
+  min-height: 20vh;
+}
+
+main {
+  min-height: 70vh;
+}
+
+footer {
+  min-height: 5vh;
+  padding: 10px;
+}
+
 .input-container {
-  margin: 20px auto;
+  padding: 20px; 
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,4 +152,14 @@ body {
 .error-container {
   color: red;
   text-align: center;
+}
+
+.credits {
+  text-align: center;
+
+  & a {
+    color: var(--main-blue);
+    font-style: italic;
+    text-decoration: none;
+  }
 }
