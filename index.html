@@ -14,14 +14,19 @@
 
 </head>
 <body>
+  <header>
+    <div class="input-container">
+      <label for="wordInput">Word</label>
+      <input type="text" id="wordInput" autocomplete="off">
+      <button type="button" onclick="handleClick()" id="wordSubmitBtn">search</button>
+    </div>
+  </header>
+  <hr>
   <main>
-    <form onsubmit="handleClick()" action="#">
-      <div class="input-container">
-        <label for="wordInput">Word</label>
-        <input type="text" id="wordInput" autocomplete="off">
-        <button type="submit" id="wordSubmitBtn">search</button>
+    <section id="definitionContainer">
+      <div class="df-body">
       </div>
-    </form>
+    </section>
   </main>
 </body>
 <script src="./script/script.js"></script>

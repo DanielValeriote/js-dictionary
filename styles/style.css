@@ -49,8 +49,8 @@ body {
 }
 
 #wordInput:focus {
-  outline: var(--main-blue) 1px solid;
-  border: 1px solid black;
+  outline: var(--main-blue) 2px solid;
+  border: 1px solid transparent;
 }
 
 #wordSubmitBtn {
@@ -62,5 +62,44 @@ body {
   font-size: 1.1rem;
   text-transform: capitalize;
   cursor: pointer;
+}
+
+#definitionContainer {
+  padding: 40px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.df-body .partOfSpeech {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  color: var(--main-blue);
+  background-color: var(--main-blue);
+  color: white;
+  border-radius: 15px 15px 15px 0px;
+  padding: 5px;
+}
+
+.df-body li {
+  padding: 5px;
+  margin: 30px 0px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-left: 0;
+  min-height: 56px;
+}
+
+.to-copy {
+  cursor: pointer;
+}
+
+.ex-label {
+  font-style: normal;
+  font-weight: bold;
+}
+
+.sentence-example {
+  padding-top: 20px;
+  font-style: italic;
 }
 /*# sourceMappingURL=style.css.map */
