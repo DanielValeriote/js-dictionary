@@ -2,17 +2,20 @@ document.getElementById('wordInput').addEventListener("keyup", (e)=> {
   e.key === "Enter" && handleClick();
 })
 
+var playing = false;
+
 const handleClick = () => {
   const input = document.getElementById("wordInput");
   const word = input.value.trim();
   word &&
     getDefinition(word)
       .then((resp) => resp.json())
-      .then((res) => renderDefinition(res[0]))
+      .then((res) => {
+        console.log(res[0])
+        renderDefinition(res[0]);
+      })
       .catch((err) => {
-        document.querySelector(
-          ".df-body"
-        ).innerHTML = `<h3 style="color: red; text-align: center">Sorry, no definition found :/</h3>`;
+        console.log(err)
       })
 }
 
@@ -20,10 +23,70 @@ const getDefinition = (word) => {
   return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
 }
 
-const renderDefinition = (df) => {
+function renderDefinition(df){
   clearInput();
   let dfbody = document.querySelector(".df-body");
+  let dfheader = document.querySelector(".df-header");
+
+  let phoneticText;
+  df.phonetics.every((phonetic) => {
+    console.log("looped");
+    if (phonetic.text.length > 0) {
+      phoneticText = phonetic.text;
+      return false;
+    }
+    return true;
+  });
+
+  dfheader.innerHTML = "";
   dfbody.innerHTML = "";
+
+  dfheader.innerHTML = `<h2 class="wordShowcase">${df.word} ${
+    // df.phonetics[1] && `<span class="phoneticShowcase">${df.phonetics[1].text}</span>`
+    phoneticText ?
+    `<span class="phoneticShowcase">${phoneticText}</span>` : ""
+  } </h2>`;
+  let audioSrc;
+  
+  df.phonetics.every(phonetic => {
+    console.log("looped")
+    if (phonetic.audio.length > 0) {
+      audioSrc = phonetic.audio;
+      createAudioBtn(audioSrc);
+      return false
+    }
+    return true
+  })
+  
+
+  function createAudioBtn () { 
+    if(audioSrc.length > 0) {
+      let btn = document.createElement("button");
+      btn.innerText = "🔊";
+      btn.classList.add("audioBtn");
+      btn.onclick = async function playAudio () {
+        if(!playing) {
+          let audio = new Audio(audioSrc);
+          audio.type = "audio/mp3";
+          playing = true;
+          setTimeout(()=> {
+            playing = false
+          }, 1000)
+          try {
+            await audio.play();
+          } catch {
+            alert("error, the audio could not be played :/");
+          }
+        } else {
+
+        }
+      }
+      dfheader.appendChild(btn);
+    }
+  }
+
+  
+  
   df.meanings.forEach((meaning) => {
     let ol = document.createElement("ol");
     ol.innerHTML = `<h3 class="partOfSpeech">${meaning.partOfSpeech}</h3>`
