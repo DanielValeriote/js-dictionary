@@ -64,6 +64,10 @@ body {
   cursor: pointer;
 }
 
+#wordSubmitBtn:active {
+  background-color: #3766ac;
+}
+
 #definitionContainer {
   padding: 40px;
   max-width: 600px;
@@ -79,6 +83,8 @@ body {
   color: white;
   border-radius: 15px 15px 15px 0px;
   padding: 5px;
+  -webkit-box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
 .df-body li {
@@ -87,6 +93,9 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-left: 0;
   min-height: 56px;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .to-copy {

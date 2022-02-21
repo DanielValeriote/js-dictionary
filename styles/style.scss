@@ -51,6 +51,9 @@ body {
   font-size: 1.1rem;
   text-transform: capitalize;
   cursor: pointer;
+  &:active {
+    background-color: rgb(55, 102, 172);
+  }
 }
 
 #definitionContainer {
@@ -69,6 +72,7 @@ body {
     color: white;
     border-radius: 15px 15px 15px 0px;
     padding: 5px;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
   }
   & li {
     padding: 5px;
@@ -76,6 +80,9 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-left: 0;
     min-height: 56px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }
 
