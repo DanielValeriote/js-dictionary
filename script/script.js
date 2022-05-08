@@ -1,17 +1,17 @@
-document.getElementById('wordInput').addEventListener("keyup", (e)=> {
-  e.key === "Enter" && handleClick();
-})
+document.getElementById('wordInput').addEventListener("keyup", e=> e.key === "Enter" && main());
 
 var playing = false;
 
-const handleClick = () => {
+const main = () => {
   const input = document.getElementById("wordInput");
   const word = input.value.trim();
-  word &&
+  if(word) {
+    changeLoadingState(true);
     getDefinition(word)
       .then((resp) => {
         if(resp.status >= 400) {
           renderErrorScreen(resp.json());
+          changeLoadingState(false);
           return "ERROR";
         } 
         return resp.json();
@@ -19,16 +19,14 @@ const handleClick = () => {
       .then((res) => {
           if(res !== "ERROR") {
             renderDefinition(res[0]);
+            changeLoadingState(false);
           }
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch((err) => console.error(err.message));
+  }
 }
 
-const getDefinition = (word) => {
-  return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-}
+const getDefinition = (word) => fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
 
 function renderDefinition(df){
   clearInput();
@@ -61,7 +59,6 @@ function renderDefinition(df){
     }
     return true
   })
-  
 
   function createAudioBtn () { 
     if(audioSrc.length > 0) {
@@ -73,23 +70,18 @@ function renderDefinition(df){
           let audio = new Audio(audioSrc);
           audio.type = "audio/mp3";
           playing = true;
-          setTimeout(()=> {
-            playing = false
-          }, 1000)
+          setTimeout(()=> playing = false, 1000)
           try {
             await audio.play();
-          } catch {
+          } catch (err) {
             alert("error, the audio could not be played :/");
+            console.error(err.message)
           }
-        } else {
-
         }
       }
       dfheader.appendChild(btn);
     }
   }
-
-  
   
   df.meanings.forEach((meaning) => {
     let ol = document.createElement("ol");
@@ -122,12 +114,9 @@ function renderDefinition(df){
   });
 }
 
-function clearInput () {
-  document.getElementById("wordInput").value = "";
-}
-
 function renderErrorScreen (resp) {
   resp.then(res => {
+    document.querySelector(".df-header").innerHTML = ""
     document.querySelector(".df-body").innerHTML = `
     <div class="error-container">
       <h2>${res.title}</h2>
@@ -136,3 +125,16 @@ function renderErrorScreen (resp) {
     `
   })
 }
+
+const changeLoadingState = (isLoading) => {
+  if(isLoading) {
+    const loadingMessage = document.createElement('h1')
+    loadingMessage.innerText = "Loading ..."
+    loadingMessage.id = 'isLoadingMessage'
+
+    document.getElementById('definitionContainer').appendChild(loadingMessage)
+  } 
+  else document.getElementById('isLoadingMessage').remove()
+}
+
+const clearInput = () => document.getElementById("wordInput").value = "";

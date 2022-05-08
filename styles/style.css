@@ -55,6 +55,11 @@ footer {
   font-size: 1.4rem;
 }
 
+#isLoadingMessage {
+  text-align: center;
+  opacity: .6;
+}
+
 #wordInput {
   font-size: 1.1rem;
   padding: 5px;
