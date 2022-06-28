@@ -24,8 +24,8 @@ const main = () => {
           }
       })
       .catch((err) => {
-        clearInput()
-        console.error(err.message)
+        clearInput();
+        console.error(err.message);
       });
   }
 }
@@ -39,7 +39,7 @@ function renderDefinition(df){
 
   let phoneticText;
   df.phonetics.every((phonetic) => {
-    if (phonetic.text.length <= 0) return true
+    if (phonetic.text.length <= 0) return true;
     phoneticText = phonetic.text;
     return false;
   });
@@ -54,10 +54,10 @@ function renderDefinition(df){
   let audioSrc;
   
   df.phonetics.every(phonetic => {
-    if (phonetic.audio.length == 0) return true
+    if (phonetic.audio.length == 0) return true;
     audioSrc = phonetic.audio;
     createAudioBtn(audioSrc);
-    return false
+    return false;
   })
 
   function createAudioBtn () { 
@@ -70,12 +70,12 @@ function renderDefinition(df){
           let audio = new Audio(audioSrc);
           audio.type = "audio/mp3";
           playing = true;
-          setTimeout(()=> playing = false, 1000)
+          setTimeout(()=> playing = false, 1000);
           try {
             await audio.play();
           } catch (err) {
             alert("error, the audio could not be played :/");
-            console.error(err.message)
+            console.error(err.message);
           }
         }
       }
@@ -96,9 +96,9 @@ function renderDefinition(df){
           : ""
       } 
       `;
-      ol.appendChild(li)
+      ol.appendChild(li);
     })
-    dfbody.appendChild(ol)
+    dfbody.appendChild(ol);
   })
 
   df.meanings[0].definitions.forEach(df => {
